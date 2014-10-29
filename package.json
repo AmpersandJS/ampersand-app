@@ -1,7 +1,7 @@
 {
   "name": "ampersand-app",
   "description": "Simple instance store for managing instances without circular dependency issues in ampersand apps.",
-  "version": "1.0.0",
+  "version": "0.0.0",
   "author": "Henrik Joreteg <henrik@andyet.net>",
   "bugs": {
     "url": "https://github.com/ampersandjs/ampersand-app/issues"
