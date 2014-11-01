@@ -1,3 +1,4 @@
+/*$AMPERSAND_VERSION*/
 var Events = require('backbone-events-standalone');
 
 
