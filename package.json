@@ -1,32 +1,41 @@
 {
-    "name": "ampersand-app",
-    "description": "Simple instance store for managing instances without circular dependency issues in ampersand apps.",
-    "version": "0.0.0",
-    "author": "Henrik Joreteg <henrik@andyet.net>",
-    "bugs": {
-        "url": "https://github.com/ampersandjs/ampersand-app/issues"
-    },
-    "homepage": "https://github.com/ampersandjs/ampersand-app",
-    "keywords": [
-        "instance store",
-        "object store"
-    ],
-    "license": "MIT",
-    "main": "ampersand-app.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/ampersandjs/ampersand-app"
-    },
-    "scripts": {
-        "test": "node test/index.js"
-    },
-    "dependencies": {
-        "backbone-events-standalone": "^0.2.4",
-        "ampersand-version": "^1.0.0"
-    },
-    "browserify": {
-        "transform": [
-            "ampersand-version"
-        ]
-    }
+  "name": "ampersand-app",
+  "description": "Simple instance store for managing instances without circular dependency issues in ampersand apps.",
+  "version": "0.0.0",
+  "author": "Henrik Joreteg <henrik@andyet.net>",
+  "bugs": {
+    "url": "https://github.com/ampersandjs/ampersand-app/issues"
+  },
+  "homepage": "https://github.com/ampersandjs/ampersand-app",
+  "keywords": [
+    "instance store",
+    "object store"
+  ],
+  "license": "MIT",
+  "main": "ampersand-app.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ampersandjs/ampersand-app"
+  },
+  "scripts": {
+    "test": "node test/index.js",
+    "test-browser": "zuul --local 8080 -- test/index.js",
+    "test-ci": "zuul -- test/index.js"
+  },
+  "dependencies": {
+    "amp-extend": "^1.0.1",
+    "amp-to-array": "^1.0.1",
+    "ampersand-events": "^1.0.1",
+    "ampersand-version": "^1.0.2"
+  },
+  "browserify": {
+    "transform": [
+      "ampersand-version"
+    ]
+  },
+  "devDependencies": {
+    "amp-keys": "^1.0.1",
+    "tape": "^3.4.0",
+    "zuul": "^1.16.5"
+  }
 }

@@ -1,20 +1,37 @@
 # ampersand-app
 
-**Note, this is not yet published, it's currently in DRAFT mode as a proposal to other the other core ampersand devs.**
+<!-- starthide -->
+Part of the [Ampersand.js toolkit](http://ampersandjs.com) for building clientside applications.
+<!-- endhide -->
 
-Simple instance store for managing instances without circular dependency issues in apps.
+Simple instance store and event channel that allows different modules within your app communicate without requiring each other directly. The entire module is only ~30 lines of code, you can [read the source here](https://github.com/AmpersandJS/ampersand-app/blob/master/ampersand-app.js) to see exactly what it does.
 
-This is far more pattern than it is code. It's insanely simple, but the pattern seems to work well in the app I tried it in, I think we should encourage use of this pattern.
 
-In a clientside app, people commonly create a global called `app` and attach instances to it for things like collections and models. The only trouble is, most of the time, in the module where you create app, you also require other models etc. 
+## The Singleton pattern
 
-What happens is, when you need to reference an instance from another module you have to just blidly do `app.myWidgets` for example. This means two things, you need to maintain linting rules that allow that reference, when you run tests those will blow up unless you create a corresponding global there too, even if that's not what you're testing.
+Whenever you `require('ampersand-app')` it returns *the same instance of a plain 'ol JavaScript `Object`*.
 
-So normally you'd do something like this:
+This is called the [Singleton pattern](http://en.wikipedia.org/wiki/Singleton_pattern). 
 
-In your app.js (Module "A"):
+This object it returns is nothing special. It's just a plain old JavaScript `Object` that has been decorated with [ampersand-events](http://ampersandjs.com/docs#ampersand-events) methods as well as an `extend` and `reset` method.
 
-```js
+That's it!
+
+
+## Why is this useful?
+
+It's quite common to create an `app` global to store collections and models on and then to reference that global whenever you need to look up related model instance from another module within your app. However, this creates many indirect interdependencies within your application which makes it more difficult to test isolated parts of your application. 
+
+It's also quite common to need "application-level" events that any number of pieces of your app may need to handle. For example, navigation events, or error events that could be triggered by any number of things within your app but that you want to handle by a single module that shows them as nice error dialogs.
+
+This module provides a pattern to address both those cases without having to rely on globals, or have circular dependency issues within your apps. It also means you don't have to adjust code linting rules to ignore that `app` global.
+
+
+**Before `ampersand-app`**
+
+Module "A" (app.js):
+
+```javascript
 var MyModel = require('./models/some-model');
 
 // explicitly create global
@@ -27,9 +44,9 @@ window.app = {
 window.app.init();
 ```
 
-In another module (Module "B") reference that global `app` variable directly:
+Module "B" (that needs access to `app`):
 
-```js
+```javascript
 // note we're not requiring anything
 module.exports = View.extend({
     someMethod: function () {
@@ -39,20 +56,16 @@ module.exports = View.extend({
 });
 ```
 
-Now module B has a hard dependency on `app` existing. This means for unit testing, you have to mock it up. Plus you have to configure your linter to be ok with you referencing a global, etc.
+**With `ampersand-app` you'd do this instead:**
 
-This module simply creates and exports a singleton where you can attach instances. 
+Module "A" (app.js):
 
-So, with `ampersand-app` you'd do this instead:
-
-In your app.js (Module "A"):
-
-```js
-var MyModel = require('./models/some-model');
+```javascript
+// it just requires ampersand-app too!
 var app = require('ampersand-app');
 
-// here we could certainly *chose* to attach it to
-// window for better debuggin in the browser 
+// Here we could certainly *chose* to attach it to
+// window for better debugging in the browser 
 // but it's no longer necessary for accessing the 
 // app instance from other modules.
 app.extend({
@@ -64,31 +77,28 @@ app.extend({
 app.init();
 ```
 
-In another module (Module "B"):
+Module "B" (that needs access to `app`):
 
-```js
-// now rather than trying to require a relative path to app
-// we just require ampersand-app here too:
+```javascript
+// this just requires ampersand-app too!
 var app = require('ampersand-app');
 
 
 module.exports = View.extend({
     someMethod: function () {
-        // reference app and models directly
+        // reference app that we required above
         app.myModel.doSomethig():
 
-        // now as a bonus, since app uses events
-        // we've also got a global pubsub mechanism
-        // for app events, that other modules can 
+        // now as a bonus, since `app` supports events
+        // we've also got a global "pubsub" mechanism
+        // for app events, that any other modules can 
         // listen to.
         app.trigger('some custom event');
     }
 });
 ```
 
-Then when we go to write tests for module "B"
-
-We can easily mock things that it expects from `app`. 
+Now when we go to write tests for module "B" we can easily mock things that it expects from `app`. 
 
 So our tests for module B might look like this:
 
@@ -101,7 +111,10 @@ var app = require('ampersand-app');
 
 
 test('test module B', function (t) {
-    // stub it out
+    // each test can clear it.
+    app.reset();
+    // stub out what it might need for the
+    // test.
     app.myModel = {
         doSomething: function () {}
     };
@@ -125,9 +138,53 @@ test('test module B', function (t) {
         view.someMethod();
     }, 'make sure calling some method does not explode');
 });
+
+test('next test', function () {
+    // now we can use `reset` if we want
+    // to make sure we clear that state
+    app.reset();
+
+    // etc. etc.
+});
 ```
 
-See discussion in relevant trello card in roadmap: https://trello.com/c/qVjePXvC
+
+## API Reference
+
+### event methods from [ampersand-events](http://ampersandjs.com/docs#ampersand-events)
+
+The `app` object is an event object so it contains all the methods as described in the [ampersand-events docs](http://ampersandjs.com/docs#ampersand-events).
+
+The `app` object becomes a handy way to communicate within your app so various modules can notify each other about "app-level" events such as user navigation, etc.
+
+### extend `app.extend(obj, [*objs])`
+
+Convenience method for attaching multiple things to the app at once. This is simply an alias for `amp-extend` that pre-fills the `app` as the object being extended.
+
+* `obj` {Object} copy properties from this object onto `app`. You can pass as many objects to this as you want as additional arguments.
+
+```javascript
+var app = require('ampersand-app');
+var UserCollection = require('./models/user-collection');
+var MeModel = require('./models/me');
+
+
+app.extend({
+    me: new MeModel(),
+    users: new UserCollection(),
+    router: new Router();
+    init: function () {
+        this.router.history.start({pushState: true});
+    }
+});
+```
+
+### reset `app.reset()`
+
+Resets the app singleton to its original state, clearing all listeners, and deleting everything you've added to it, but keeping the same object instance.
+
+This is primarily for simplifying unit testing of modules within your app. Whenever you `require('ampersand-app')` you get the same object instance (this is the [Singleton pattern](http://en.wikipedia.org/wiki/Singleton_pattern)). So, having `app.reset()` lets you mock app state required for testing a given module.
+
 
 ## install
 

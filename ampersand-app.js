@@ -1,5 +1,7 @@
 /*$AMPERSAND_VERSION*/
-var Events = require('backbone-events-standalone');
+var Events = require('ampersand-events');
+var toArray = require('amp-to-array');
+var extend = require('amp-extend');
 
 
 // instance app, can be used just by itself
@@ -8,14 +10,9 @@ var Events = require('backbone-events-standalone');
 // avoid globals
 var app = {
     extend: function () {
-        var source, prop;
-        for (var i = 0, length = arguments.length; i < length; i++) {
-            source = arguments[i];
-            for (prop in source) {
-                app[prop] = source[prop];
-            }
-        }
-        return app;
+        args = toArray(arguments);
+        args.unshift(this);
+        return extend.apply(null, args);
     },
     reset: function () {
         // clear all events
@@ -27,11 +24,11 @@ var app = {
             }
         }
         // remix events
-        Events.mixin(this);
+        Events.createEmitter(this);
     }
 };
 
-Events.mixin(app);
+Events.createEmitter(app);
 
 // export our singleton
 module.exports = app;
