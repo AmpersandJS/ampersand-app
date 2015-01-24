@@ -4,7 +4,7 @@
 Part of the [Ampersand.js toolkit](http://ampersandjs.com) for building clientside applications.
 <!-- endhide -->
 
-Simple instance store and event channel that allows different modules within your app communicate without requiring each other directly. The entire module is only ~30 lines of code, you can [read the source here](https://github.com/AmpersandJS/ampersand-app/blob/master/ampersand-app.js) to see exactly what it does.
+Simple instance store and event channel that allows different modules within your app to communicate without requiring each other directly. The entire module is only ~30 lines of code, you can [read the source here](https://github.com/AmpersandJS/ampersand-app/blob/master/ampersand-app.js) to see exactly what it does.
 
 
 ## The Singleton pattern
@@ -63,6 +63,7 @@ Module "A" (app.js):
 ```javascript
 // it just requires ampersand-app too!
 var app = require('ampersand-app');
+var MyModel = require('./models/some-model');
 
 // Here we could certainly *chose* to attach it to
 // window for better debugging in the browser 
