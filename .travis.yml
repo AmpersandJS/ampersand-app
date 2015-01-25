@@ -6,8 +6,8 @@ before_install:
 - sh -e /etc/init.d/xvfb start
 env:
   global:
-  - secure: nQ9ciBKFWAbg6W0RlikyhgLgQF8PMhPbNaIFGC7zwkJ+1iOslYYYbE2Ve959v5fvX6TdCMiQRjzsZoH5PC+IdSxRJWau23m/6r8yRPKhouLAkHAEgRMEMHzOdVkk/HxYxtnMdJ9MfY58wjBfxAX0WR4W7TydUkLL6DLfUYZauTs=
-  - secure: OKuVsB6Y19yGsRLkaKOXG3yOJouSCkzuVYrjBHahhZ3pCVFHY3829zEkeI1jZ0QcHSqIYhqpAFhrjLSEafqVQOTSkEjetQOPKTf4mPFBlxwSAgmFJocUEPnKpKuyYTorhddrM5kDrHcq1zscgwAaToamabIN7Pt9ykjPtvUb9b8=
+  - secure: D820SzNYNVkbGCLM0MEBZ+AA0NtjYhxqArfUnos7NskmdSaSTkQP9jdd5xLI/q3kLxh5kwqkleIhT3HbUDawkIoGnvU+6iFKtz68XhOdnGPB4krVCSH18jAykVIZazTZUqTQo6/GbGOUEIWIBcTKN58y+fbpVL38d/zDN+zi1aw=
+  - secure: LC0G9Dm6WANxRGPmrThaTuWids36YsGseWeM2Pn1hLAHVRNrrpi+OTfcD4edj3juv3HniqsW9p5Iz1xaNId+7PcnrOCtBwtlxwwomMlIuN7fquAlwyGPezYNMei7S6pZGJyngPT0LdDiYkJibaQoRqCi+WQs8F+3xScLAo9WfqQ=
 notifications:
   webhooks:
     urls:
