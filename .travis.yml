@@ -4,10 +4,6 @@ node_js:
 before_install:
 - export DISPLAY=:99.0
 - sh -e /etc/init.d/xvfb start
-env:
-  global:
-  - secure: D820SzNYNVkbGCLM0MEBZ+AA0NtjYhxqArfUnos7NskmdSaSTkQP9jdd5xLI/q3kLxh5kwqkleIhT3HbUDawkIoGnvU+6iFKtz68XhOdnGPB4krVCSH18jAykVIZazTZUqTQo6/GbGOUEIWIBcTKN58y+fbpVL38d/zDN+zi1aw=
-  - secure: LC0G9Dm6WANxRGPmrThaTuWids36YsGseWeM2Pn1hLAHVRNrrpi+OTfcD4edj3juv3HniqsW9p5Iz1xaNId+7PcnrOCtBwtlxwwomMlIuN7fquAlwyGPezYNMei7S6pZGJyngPT0LdDiYkJibaQoRqCi+WQs8F+3xScLAo9WfqQ=
 notifications:
   webhooks:
     urls:
