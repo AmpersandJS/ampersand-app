@@ -186,7 +186,7 @@ var MeModel = require('./models/me');
 app.extend({
     me: new MeModel(),
     users: new UserCollection(),
-    router: new Router();
+    router: new Router(),
     init: function () {
         this.router.history.start({pushState: true});
     }
