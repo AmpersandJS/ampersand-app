@@ -51,7 +51,7 @@ Module "B" (that needs access to `app`):
 module.exports = View.extend({
     someMethod: function () {
         // reference app and models directly
-        app.myModel.doSomethig():
+        app.myModel.doSomething():
     }
 });
 ```
@@ -88,7 +88,7 @@ var app = require('ampersand-app');
 module.exports = View.extend({
     someMethod: function () {
         // reference app that we required above
-        app.myModel.doSomethig():
+        app.myModel.doSomething():
 
         // now as a bonus, since `app` supports events
         // we've also got a global "pubsub" mechanism
