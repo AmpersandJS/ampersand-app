@@ -10,7 +10,7 @@ var extend = require('amp-extend');
 // avoid globals
 var app = {
     extend: function () {
-        args = toArray(arguments);
+        var args = toArray(arguments);
         args.unshift(this);
         return extend.apply(null, args);
     },
