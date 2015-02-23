@@ -163,6 +163,12 @@ Rather than make all those assumptions about how its going to be used, just make
 This allows people who don't use this particular applicaition pattern to still use your npm module and leaves the event names, and application architecture up to the person building the app.
 
 
+## install
+
+```
+npm install ampersand-app
+```
+
 ## API Reference
 
 ### event methods
@@ -199,13 +205,7 @@ Resets the app singleton to its original state, clearing all listeners, and dele
 
 This is primarily for simplifying unit testing of modules within your app. Whenever you `require('ampersand-app')` you get the same object instance (this is the [Singleton pattern](http://en.wikipedia.org/wiki/Singleton_pattern)). So, having `app.reset()` lets you mock app state required for testing a given module.
 
-
-## install
-
-```
-npm install ampersand-app
-```
-
+<!-- starthide -->
 ## credits
 
 Created by [@HenrikJoreteg](http://twitter.com/henrikjoreteg).
@@ -213,4 +213,4 @@ Created by [@HenrikJoreteg](http://twitter.com/henrikjoreteg).
 ## license
 
 MIT
-
+<!-- endhide -->
