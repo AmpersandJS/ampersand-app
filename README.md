@@ -165,7 +165,7 @@ This allows people who don't use this particular applicaition pattern to still u
 
 ## API Reference
 
-### event methods from [ampersand-events](http://ampersandjs.com/docs#ampersand-events)
+### event methods
 
 The `app` object is an event object so it contains all the methods as described in the [ampersand-events docs](http://ampersandjs.com/docs#ampersand-events).
 
