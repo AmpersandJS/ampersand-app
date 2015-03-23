@@ -160,7 +160,7 @@ Say you want to make an `error` event handling module, that requires `ampersand-
 
 Rather than make all those assumptions about how its going to be used, just make the nice error dialog view and suggest in the readme how someone might use `ampersand-app` as an event channel to trigger them.
 
-This allows people who don't use this particular applicaition pattern to still use your npm module and leaves the event names, and application architecture up to the person building the app.
+This allows people who don't use this particular application pattern to still use your npm module and leaves the event names, and application architecture up to the person building the app.
 
 
 ## install
