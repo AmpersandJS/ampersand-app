@@ -18,8 +18,8 @@
     "url": "https://github.com/ampersandjs/ampersand-app"
   },
   "scripts": {
-    "test": "node test/index.js",
-    "test-browser": "zuul --local 8080 -- test/index.js",
+    "start": "zuul --local -- test/index.js",
+    "test": "zuul --phantom -- test/index.js",
     "test-ci": "zuul -- test/index.js"
   },
   "dependencies": {
@@ -35,7 +35,8 @@
   },
   "devDependencies": {
     "amp-keys": "^1.0.1",
+    "phantomjs": "^1.9.19",
     "tape": "^3.4.0",
-    "zuul": "^1.16.5"
+    "zuul": "^3.9.0"
   }
 }
