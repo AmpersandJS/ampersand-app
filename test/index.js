@@ -1,7 +1,7 @@
 var test = require('tape');
 var app = require('../ampersand-app');
 var Events = require('ampersand-events');
-var objKeys = require('lodash/keys');
+var objKeys = require('lodash.keys');
 
 
 test('ampersand-app basic functionality', function (t) {

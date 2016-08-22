@@ -1,7 +1,7 @@
 /*$AMPERSAND_VERSION*/
 var Events = require('ampersand-events');
-var toArray = require('lodash/toArray');
-var extend = require('lodash/assign');
+var toArray = require('lodash.toarray');
+var extend = require('lodash.assign');
 
 
 // instance app, can be used just by itself
